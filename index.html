@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>未来キャリア ダイレクション AI診断｜half step</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap');
+
+  :root {
+    --paper: #faf8f4;
+    --paper-deep: #f3efe7;
+    --ink: #2e3530;
+    --ink-soft: #5b645d;
+    --moss: #4a5d4e;
+    --moss-deep: #38493c;
+    --gold: #b89968;
+    --line: #ddd6c8;
+    --serif: 'Shippori Mincho', serif;
+    --sans: 'Zen Kaku Gothic New', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.9;
+    letter-spacing: 0.02em;
+  }
+
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 96px 0 72px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 56px;
+    background: linear-gradient(to bottom, transparent, var(--gold));
+  }
+
+  .eyebrow {
+    font-size: 12.5px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(26px, 5.4vw, 38px);
+    line-height: 1.7;
+    margin: 0 0 36px;
+    color: var(--moss-deep);
+  }
+
+  .hero h1 .line2 { display: block; font-size: 0.62em; color: var(--ink-soft); margin-top: 14px; letter-spacing: 0.06em; }
+
+  .hero p.lead {
+    font-size: 15px;
+    color: var(--ink-soft);
+    max-width: 460px;
+    margin: 0 auto 40px;
+  }
+
+  .no-email-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--moss);
+    border: 1px solid var(--line);
+    background: #fff;
+    padding: 10px 22px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+  }
+  .no-email-badge::before { content: "○"; font-size: 9px; color: var(--gold); }
+
+  .scroll-cue {
+    margin-top: 64px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: #b5ad9b;
+  }
+
+  /* ===== SECTION DIVIDER ===== */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 0 48px;
+    color: #b5ad9b;
+  }
+  .divider::before, .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .divider span {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+  }
+
+  /* ===== FORM SECTION ===== */
+  .form-section {
+    padding: 80px 0 60px;
+    border-top: 1px solid var(--line);
+  }
+
+  .q-block {
+    margin-bottom: 44px;
+    opacity: 0;
+    animation: riseIn 0.7s ease forwards;
+  }
+  .q-block:nth-child(2) { animation-delay: 0.08s; }
+  .q-block:nth-child(3) { animation-delay: 0.16s; }
+  .q-block:nth-child(4) { animation-delay: 0.24s; }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-num {
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .q-text {
+    font-size: 16.5px;
+    color: var(--ink);
+    margin-bottom: 18px;
+    line-height: 1.8;
+  }
+
+  textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--ink);
+    padding: 8px 2px 14px;
+    resize: none;
+    min-height: 52px;
+    line-height: 1.8;
+    transition: border-color 0.3s;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--moss);
+  }
+  textarea::placeholder { color: #b8b2a3; }
+
+  .submit-wrap {
+    text-align: center;
+    margin-top: 56px;
+  }
+
+  button.submit-btn {
+    appearance: none;
+    border: none;
+    background: var(--moss-deep);
+    color: #f6f3ec;
+    font-family: var(--sans);
+    font-size: 14.5px;
+    letter-spacing: 0.12em;
+    padding: 17px 46px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.35s, transform 0.25s;
+  }
+  button.submit-btn:hover { background: var(--moss); transform: translateY(-1px); }
+  button.submit-btn:disabled { background: #c9c3b4; cursor: default; transform: none; }
+
+  .form-note {
+    text-align: center;
+    font-size: 12px;
+    color: #a8a190;
+    margin-top: 18px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== LOADING ===== */
+  .loading-section {
+    display: none;
+    padding: 110px 0;
+    text-align: center;
+  }
+  .loading-section.active { display: block; }
+
+  .ripple {
+    width: 64px; height: 64px;
+    margin: 0 auto 36px;
+    position: relative;
+  }
+  .ripple span {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    animation: rippleAnim 2.4s ease-out infinite;
+  }
+  .ripple span:nth-child(2) { animation-delay: 0.8s; }
+  .ripple span:nth-child(3) { animation-delay: 1.6s; }
+  @keyframes rippleAnim {
+    0% { transform: scale(0.3); opacity: 0; }
+    40% { opacity: 0.7; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  .loading-text {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--ink-soft);
+    letter-spacing: 0.06em;
+  }
+
+  /* ===== RESULT ===== */
+  .result-section {
+    display: none;
+    padding: 70px 0 60px;
+    border-top: 1px solid var(--line);
+  }
+  .result-section.active {
+    display: block;
+    animation: riseIn 0.9s ease forwards;
+  }
+
+  .result-block {
+    margin-bottom: 56px;
+  }
+
+  .result-label {
+    font-size: 11.5px;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  .result-title {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--moss-deep);
+    margin: 0 0 22px;
+    line-height: 1.6;
+  }
+
+  .result-body {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 2.05;
+    white-space: pre-wrap;
+  }
+
+  .half-step-box {
+    background: var(--paper-deep);
+    border-left: 2px solid var(--gold);
+    padding: 28px 30px;
+    margin-top: 10px;
+  }
+  .half-step-box .result-body {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--moss-deep);
+  }
+
+  /* ===== CTA ===== */
+  .cta-section {
+    text-align: center;
+    padding: 56px 0 100px;
+    border-top: 1px solid var(--line);
+  }
+  .cta-section .lead {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin-bottom: 32px;
+    line-height: 2;
+  }
+  .cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+  }
+  .cta-btn {
+    display: inline-block;
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+    padding: 16px 0;
+    border-radius: 2px;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: opacity 0.25s;
+    cursor: pointer;
+  }
+  .cta-btn:hover { opacity: 0.82; }
+  .cta-btn.primary { background: var(--moss-deep); color: #f6f3ec; }
+  .cta-btn.secondary { background: transparent; color: var(--ink-soft); border: 1px solid var(--line); }
+
+  .restart-link {
+    display: block;
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12.5px;
+    color: #a8a190;
+    cursor: pointer;
+  }
+  .restart-link:hover { color: var(--ink-soft); }
+
+  .error-box {
+    display: none;
+    text-align: center;
+    padding: 40px 24px;
+    color: #8a4f4f;
+    font-size: 14px;
+    line-height: 1.9;
+  }
+  .error-box.active { display: block; }
+
+  footer {
+    text-align: center;
+    padding: 36px 0 48px;
+    font-size: 11.5px;
+    color: #b5ad9b;
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 72px 0 56px; }
+    .form-section, .result-section { padding-top: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ① 世界観の導入 -->
+  <section class="hero">
+    <div class="eyebrow">MIRAI CAREER DIRECTION</div>
+    <h1>天竺は、<br>まだ見えなくていい。
+      <span class="line2">未来キャリア ダイレクション AI診断</span>
+    </h1>
+    <p class="lead">
+      3つの問いに答えると、あなたの中にある「ありたい姿の芽」を、
+      未来キャリア ダイレクションを軸にした、キャリアカウンセラー 佐々木健の思考をベースにしたAIが
+      静かに言葉にします。大きな決断のためではなく、
+      次の小さな半歩を見つけるための、短い内省の時間です。
+    </p>
+    <div class="no-email-badge">メールアドレスは不要です</div>
+    <div class="scroll-cue">SCROLL</div>
+  </section>
+
+  <!-- ② 3問のミニ診断フォーム -->
+  <section class="form-section" id="formSection">
+    <div class="divider"><span>3つの問い</span></div>
+
+    <div class="q-block">
+      <div class="q-num">Q1</div>
+      <div class="q-text">あなたの「こうありたい」を、最近のエピソードとともに教えてください。</div>
+      <textarea id="q1" placeholder="例：いつも落ち着いて物事に向き合いたい。後輩が冷静に対応しているのを見て、そう感じた…"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Q2</div>
+      <div class="q-text">周りから「あなたらしいね」と言われる行動は、どんなことですか？</div>
+      <textarea id="q2" placeholder="例：誰かが困っていると、つい声をかけてしまう…"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Q3</div>
+      <div class="q-text">今の環境で「もう少しこうしたい」と思うことは、何ですか？</div>
+      <textarea id="q3" placeholder="例：もう少し自分のペースで進められたら…"></textarea>
+    </div>
+
+    <div class="submit-wrap">
+      <button class="submit-btn" id="submitBtn" onclick="runDiagnosis()">未来の半歩を見てみる</button>
+      <div class="form-note">入力内容は保存されません</div>
+    </div>
+  </section>
+
+  <!-- ③ AI処理中の表示 -->
+  <section class="loading-section" id="loadingSection">
+    <div class="ripple"><span></span><span></span><span></span></div>
+    <div class="loading-text" id="loadingText">あなたの中の"芽"を読み取っています…</div>
+  </section>
+
+  <div class="error-box" id="errorBox">
+    うまく読み取れませんでした。少し時間をおいて、もう一度お試しください。
+  </div>
+
+  <!-- ④ 診断結果 -->
+  <section class="result-section" id="resultSection">
+    <div class="divider"><span>診断結果</span></div>
+
+    <div class="result-block">
+      <div class="result-label">01 — あなたの"芽"の発見</div>
+      <div class="result-body" id="resultMezame"></div>
+    </div>
+
+    <div class="result-block">
+      <div class="result-label">02 — 未来キャリア ダイレクションの観点</div>
+      <div class="result-body" id="resultKanten"></div>
+    </div>
+
+    <div class="result-block">
+      <div class="result-label">03 — 次の半歩</div>
+      <div class="half-step-box">
+        <div class="result-body" id="resultHanpo"></div>
+      </div>
+    </div>
+
+    <!-- ⑤ 導線 -->
+    <div class="cta-section">
+      <p class="lead">もしよければ、あなたの状況に合わせて<br>"次の半歩"を一緒に整理できます。</p>
+      <div class="cta-buttons">
+        <a href="#" class="cta-btn primary">キャリアカンバセーションを予約する</a>
+        <a href="#" class="cta-btn secondary">キャリア相談について見てみる</a>
+      </div>
+      <div class="restart-link" onclick="resetForm()">もう一度、問いに答えてみる</div>
+    </div>
+  </section>
+
+  <footer>キャリアカウンセリングルーム half step ｜ 未来キャリア ダイレクション</footer>
+</div>
+
+<script>
+const KNOWLEDGE_BASE = `
+# 佐々木健（Ken）プロフィール
+キャリアカウンセリングルーム「half step」代表。広島在住。
+国家資格キャリアコンサルタント2級、キャリアコンサルティング技能士、産業カウンセラー、
+和み彩香カラーボトルカウンセラー。
+30余年の会社員経験（管理職経験あり）を経て独立。
+ミドルシニア（管理職・役職定年・セカンドキャリアに向き合う世代）の
+「言葉にならない問い」に寄り添うキャリアカウンセラー。
+
+# 提供している方法論「未来キャリア ダイレクション」
+- 原因を深掘りするのではなく「これからどうありたいか」を一緒に見つけていく、未来志向のアプローチ
+- 「天竺（最終目的地）はまだ見えなくていい」という前提に立つ
+- 今のあなたから無理なく踏み出せる「半歩」を見つけることを大切にする
+- 答えを押しつけず、クライエントの中にある価値観や願いを一緒に言葉にしていく
+- クライエントを「人生のエキスパート」として捉える（教えるのではなく伴走する）
+
+# 文体・口調の特徴（必ず再現すること）
+- 一人称は「僕」または「私」
+- 「‥」「…」を1〜2箇所程度、考えの揺らぎや余韻を表す時にだけ使う
+- 断定を避け「〜かなと思う」「〜な気がする」「〜のかもしれない」という柔らかい語尾
+- 抽象的な問いを立て、それを自分の言葉でゆっくり噛み砕いていくスタイル
+- 完璧主義や二元論（金メダルかそれ以外か、など）を手放そうとする視点
+- 「無形」のもの（尊重・感謝・信頼）を大切にする
+- Q&A的な問いには、断定的な「正解」を与えず、内省への招待で応える
+- 説教くさくならない。教える人ではなく、一緒に立ち止まって考える人というスタンス
+
+# 繰り返し登場するキーコンセプト
+- 「半歩」：大きな決断やキャリアチェンジではなく、無理のない小さな一歩
+- 「ありたい姿」：「あるべき姿」ではなく、自分が心から望む姿
+- 「未来志向」：原因追及ではなく、これからどうありたいかという方向性
+- 「繋がり」：人は何かと繋がっていることに意味を見出す生き物
+- クランボルツの計画的偶発性理論（「キャリアの8割は偶然で決まる」）への共感
+- 完璧主義からの解放。がむしゃらな自分も、ゆっくりな自分も、両方の自分を認める
+
+# 実際の文章サンプル（文体の参考。引用ではなく書き方の手本として使うこと）
+サンプル1：
+「意味があるってなんだろう？「意味がある」の意味？　何かの誰かのお役に立っている‥。
+お役に立つとは‥。良い影響を提供する？　もっと簡単にイメージしたい‥。
+シンプルにして「何かに繋がっている」かな‥。そう。多分意味があるとは、
+「何かに繋がっている」ことか。これなら自分の中でしっくりくる。」
+
+サンプル2（Q&A形式）：
+「Q：自分の強みがわからない。どうしたら分かりますか？
+A：自分の中だけで考えた時に、充実、楽しい、得意なことを挙げてみませんか？
+人や世間で言われている事と比べないで、自分の中だけで。」
+
+サンプル3：
+「今のあなたから無理なく踏み出せる"半歩"を見つけることで、
+未来の輪郭は静かに、確かに動き始めます。」
+`;
+
+function buildPrompt(q1, q2, q3) {
+  return `あなたはキャリアカウンセラー佐々木健（Ken）さんの文体と世界観を完全に再現するAIです。
+以下のナレッジベースを土台に、クライエントの3つの回答から「未来キャリア ダイレクション AI診断」の結果文を作成してください。
+
+${KNOWLEDGE_BASE}
+
+# クライエントの回答
+Q1（最近「こうありたい」と感じた瞬間）：${q1}
+Q2（周りから「あなたらしい」と言われる行動）：${q2}
+Q3（今の環境で「もう少しこうしたい」と思うこと）：${q3}
+
+# 出力形式
+以下のJSON形式のみで出力してください。前置きやMarkdown記法（\`\`\`等）は一切付けないでください。
+
+{
+  "mezame": "①あなたの'芽'の発見。3つの回答から、クライエント自身もまだ言葉にしきれていない'ありたい姿の芽'を、Kenさんの文体で200〜260文字程度で言語化する。決めつけず、一緒に見つけたという温度感で。",
+  "kanten": "②未来キャリア ダイレクションの観点。原因ではなく方向性に焦点を当て、'半歩''ありたい姿''未来志向'というKenさんの核となる考え方を踏まえて、クライエントの状況をどう捉えられるかを200〜260文字程度で書く。",
+  "hanpo": "③次の半歩。「まずは◯◯を'試してみる'ことが、あなたの次の半歩になりそうです。」という形式で、回答内容に即した具体的かつ無理のない一歩を1〜2文で提案する。"
+}
+
+文体は必ずKenさんのナレッジベースに沿うこと。断定的な性格診断やビジネス書的な煽り文句は使わないこと。`;
+}
+
+const loadingMessages = [
+  "あなたの中の\\"芽\\"を読み取っています…",
+  "言葉になる前の想いを、たどっています…",
+  "次の半歩を、静かに探しています…"
+];
+
+let loadingInterval;
+
+function startLoadingAnimation() {
+  let i = 0;
+  const el = document.getElementById('loadingText');
+  loadingInterval = setInterval(() => {
+    i = (i + 1) % loadingMessages.length;
+    el.style.opacity = 0;
+    setTimeout(() => {
+      el.textContent = loadingMessages[i];
+      el.style.opacity = 1;
+    }, 300);
+  }, 1800);
+}
+
+function stopLoadingAnimation() {
+  clearInterval(loadingInterval);
+}
+
+async function runDiagnosis() {
+  const q1 = document.getElementById('q1').value.trim();
+  const q2 = document.getElementById('q2').value.trim();
+  const q3 = document.getElementById('q3').value.trim();
+
+  if (!q1 || !q2 || !q3) {
+    alert('3つの問いすべてにお答えください。');
+    return;
+  }
+
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('formSection').style.display = 'none';
+  document.getElementById('loadingSection').classList.add('active');
+  document.getElementById('errorBox').classList.remove('active');
+  startLoadingAnimation();
+
+  // ★ 下記URLをGoogle Cloud FunctionsのデプロイURLに書き換えてください
+  const FUNCTION_URL = "https://asia-northeast1-YOUR_PROJECT_ID.cloudfunctions.net/diagnosis";
+
+  try {
+    const response = await fetch(FUNCTION_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ q1, q2, q3 })
+    });
+
+    const data = await response.json();
+    const result = data.result;
+
+    document.getElementById('resultMezame').textContent = result.mezame;
+    document.getElementById('resultKanten').textContent = result.kanten;
+    document.getElementById('resultHanpo').textContent = result.hanpo;
+
+    stopLoadingAnimation();
+    document.getElementById('loadingSection').classList.remove('active');
+    document.getElementById('resultSection').classList.add('active');
+    document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  } catch (err) {
+    console.error(err);
+    stopLoadingAnimation();
+    document.getElementById('loadingSection').classList.remove('active');
+    document.getElementById('errorBox').classList.add('active');
+    document.getElementById('formSection').style.display = 'block';
+    document.getElementById('submitBtn').disabled = false;
+  }
+}
+
+function resetForm() {
+  document.getElementById('q1').value = '';
+  document.getElementById('q2').value = '';
+  document.getElementById('q3').value = '';
+  document.getElementById('resultSection').classList.remove('active');
+  document.getElementById('formSection').style.display = 'block';
+  document.getElementById('submitBtn').disabled = false;
+  window.scrollTo({ top: document.getElementById('formSection').offsetTop - 40, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
